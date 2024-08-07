@@ -4,11 +4,11 @@ import {
   TextField,
   Box,
   Typography,
-  Grid2,
   FormControl,
   Select,
   MenuItem,
 } from "@mui/material";
+import Grid2 from "@mui/material/Unstable_Grid2";
 import ImageUpload from "../imageUpload/ImageUpload";
 import {
   TimePicker,
@@ -63,7 +63,7 @@ const CustomForm = ({ onClose, onSubmit }) => {
       </Typography>
       <Grid2 container spacing={2} flexDirection="row">
         <Grid2 container spacing={4} flexDirection="column" flex={1}>
-          <Grid2 xs={12} sm={6}>
+          <Grid2 xs={12}>
             <Typography variant="body1" fontWeight={600} marginBottom={1}>
               Instructor Name <span style={{ color: "red" }}>*</span>
             </Typography>
@@ -132,7 +132,7 @@ const CustomForm = ({ onClose, onSubmit }) => {
             />
           </Grid2>
         </Grid2>
-        <Grid2 container flex={1} flexDirection="column" gap={3}>
+        <Grid2 container flex={1} flexDirection="column" gap={2}>
           <Grid2 item xs={12} sm={6}>
             {/* Instructor Image input field */}
             <ImageUpload />
