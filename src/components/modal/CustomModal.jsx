@@ -1,0 +1,35 @@
+import { Modal, Box, Typography } from "@mui/material";
+import CustomForm from "../form/CustomForm";
+
+const CustomModal = ({ open, onClose }) => {
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 1000,
+    height: 800,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 12,
+  };
+
+  const handleFormSubmit = (formData) => {
+    console.log("Form Data:", formData);
+    // Here you can handle the submission, e.g., sending data to a server
+  };
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      <Box sx={style}>
+        <Typography variant="h6" component="h2">
+          Create Webinar
+        </Typography>
+        <CustomForm onClose={onClose} onSubmit={handleFormSubmit} />
+      </Box>
+    </Modal>
+  );
+};
+
+export default CustomModal;
