@@ -15,7 +15,9 @@ import {
   DatePicker,
   LocalizationProvider,
 } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import "dayjs/locale/de";
+import dayjs from "dayjs";
 
 const topics = [
   "Frontend",
@@ -34,16 +36,14 @@ const CustomForm = ({ onClose, onSubmit }) => {
     company: "",
     topic: "",
     title: "",
-    startDate: new Date(),
-    startTime: new Date().toLocaleTimeString(),
-    endTime: "",
+    startDate: dayjs(Date.now()),
+    startTime: dayjs(Date.now().toLocaleString()),
+    endTime: dayjs(Date.now().toLocaleString()),
   });
 
   const handleChange = (event) => {
-    // console.log("Handling change for:", event.target.value);
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // console.log("form data : ", formData);
   };
 
   const handleDateTimeChange = (newValue, field) => {
@@ -53,7 +53,7 @@ const CustomForm = ({ onClose, onSubmit }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     onSubmit(formData);
-    // onClose();
+    onClose();
   };
 
   return (
@@ -61,12 +61,7 @@ const CustomForm = ({ onClose, onSubmit }) => {
       <Typography variant="h6" component="div" gutterBottom>
         Instructor Details
       </Typography>
-      <Grid2
-        container
-        spacing={2}
-        flexDirection="row"
-        // justifyContent="space-evenly"
-      >
+      <Grid2 container spacing={2} flexDirection="row">
         <Grid2 container spacing={4} flexDirection="column" flex={1}>
           <Grid2 xs={12} sm={6}>
             <Typography variant="body1" fontWeight={600} marginBottom={1}>
@@ -194,7 +189,7 @@ const CustomForm = ({ onClose, onSubmit }) => {
         </Grid2>
         <Grid2 container spacing={2} flexDirection="row">
           <Grid2 item xs={12} sm={4}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
               <Typography variant="body1" fontWeight={600}>
                 Start Date <span style={{ color: "red" }}>*</span>
               </Typography>
@@ -218,7 +213,7 @@ const CustomForm = ({ onClose, onSubmit }) => {
             <Typography variant="body1" fontWeight={600}>
               Start Time <span style={{ color: "red" }}>*</span>
             </Typography>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
               <TimePicker
                 defaultValue={formData.startTime}
                 onChange={(newValue) =>
@@ -235,7 +230,7 @@ const CustomForm = ({ onClose, onSubmit }) => {
             <Typography variant="body1" fontWeight={600}>
               End Time <span style={{ color: "red" }}>*</span>
             </Typography>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
               <TimePicker
                 defaultValue={formData.endTime}
                 onChange={(newValue) =>
