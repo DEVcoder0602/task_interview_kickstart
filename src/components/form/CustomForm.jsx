@@ -4,11 +4,11 @@ import {
   TextField,
   Box,
   Typography,
-  Grid2,
   FormControl,
   Select,
   MenuItem,
 } from "@mui/material";
+import Grid2 from "@mui/material/Unstable_Grid2";
 import ImageUpload from "../imageUpload/ImageUpload";
 import {
   TimePicker,
