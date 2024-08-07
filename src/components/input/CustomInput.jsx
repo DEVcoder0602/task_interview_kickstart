@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   MenuItem,
@@ -13,11 +13,11 @@ export default function CustomInput({
   type = "text",
   options = [],
   label = "",
+  item = "",
+  setItem = () => _,
 }) {
-  const [value, setValue] = useState("");
-
   const handleChange = (event) => {
-    setValue(event.target.value);
+    setItem(event.target.value);
   };
 
   if (type === "select") {
@@ -27,7 +27,7 @@ export default function CustomInput({
         <Select
           labelId="custom-input-label"
           id="custom-select"
-          value={value}
+          value={item}
           label={label}
           placeholder="Topic"
           onChange={handleChange}
@@ -47,7 +47,7 @@ export default function CustomInput({
         type={type}
         variant="outlined"
         placeholder="Search for webinar"
-        value={value}
+        value={item}
         onChange={handleChange}
         slotProps={{
           input: {

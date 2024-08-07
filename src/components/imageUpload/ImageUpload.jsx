@@ -27,8 +27,8 @@ function ImageUpload() {
       </label>
       <div
         style={{
-          width: "180px",
-          height: "180px",
+          width: "160px",
+          height: "160px",
           border: "2px dashed #D9DBDC",
           backgroundColor: "#F2F4F8",
           display: "flex",

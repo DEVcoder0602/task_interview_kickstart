@@ -10,6 +10,12 @@ import {
   MenuItem,
 } from "@mui/material";
 import ImageUpload from "../imageUpload/ImageUpload";
+import {
+  TimePicker,
+  DatePicker,
+  LocalizationProvider,
+} from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 
 const topics = [
   "Frontend",
@@ -34,8 +40,14 @@ const CustomForm = ({ onClose, onSubmit }) => {
   });
 
   const handleChange = (event) => {
+    // console.log("Handling change for:", event.target.value);
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // console.log("form data : ", formData);
+  };
+
+  const handleDateTimeChange = (newValue, field) => {
+    setFormData((prev) => ({ ...prev, [field]: newValue }));
   };
 
   const handleSubmit = (event) => {
@@ -45,77 +57,6 @@ const CustomForm = ({ onClose, onSubmit }) => {
   };
 
   return (
-    // <form onSubmit={handleSubmit}>
-    //   <CustomInput
-    //     label="Name"
-    //     placeholder="Enter Instructor Name"
-    //     name="instructorName"
-    //     onChange={handleChange}
-    //     value={formData.name}
-    //   />
-    //   <CustomInput
-    //     label="Instructor Image"
-    //     name="instructorPhoto"
-    //     onChange={handleChange}
-    //     value={formData.photo}
-    //   />
-    //   <CustomInput
-    //     label="Role"
-    //     placeholder="Enter Instructor Role"
-    //     name="instructorRole"
-    //     onChange={handleChange}
-    //     value={formData.role}
-    //   />
-    //   <CustomInput
-    //     label="Company"
-    //     placeholder="Enter Instructor Company"
-    //     name="instructorCompany"
-    //     onChange={handleChange}
-    //     value={formData.company}
-    //   />
-    //   <CustomInput
-    //     type="select"
-    //     options={topics}
-    //     label="Topic"
-    //     name="webinarTopic"
-    //     onChange={handleChange}
-    //     value={formData.topic}
-    //   />
-    //   <CustomInput
-    //     label="Webinar Title"
-    //     placeholder="Enter Webinar Title"
-    //     name="webinarTitle"
-    //     onChange={handleChange}
-    //     value={formData.title}
-    //   />
-    //   <CustomInput
-    //     type="date"
-    //     label="Start Date"
-    //     name="startDate"
-    //     onChange={handleChange}
-    //     value={formData.startDate}
-    //   />
-    //   <CustomInput
-    //     type="time"
-    //     label="Start Time"
-    //     name="startTime"
-    //     onChange={handleChange}
-    //     value={formData.startTime}
-    //   />
-    //   <CustomInput
-    //     type="time"
-    //     label="End Time"
-    //     name="endTime"
-    //     onChange={handleChange}
-    //     value={formData.endTime}
-    //   />
-    //   <Button type="submit" variant="contained" color="primary">
-    //     Create Webinar
-    //   </Button>
-    //   <Button variant="text" color="primary" onClick={() => onClose()}>
-    //     Cancel
-    //   </Button>
-    // </form>
     <Box component="form" onSubmit={handleSubmit}>
       <Typography variant="h6" component="div" gutterBottom>
         Instructor Details
@@ -132,11 +73,13 @@ const CustomForm = ({ onClose, onSubmit }) => {
               Instructor Name <span style={{ color: "red" }}>*</span>
             </Typography>
             <TextField
-              id="instructorName"
+              id="name"
+              name="instructorName"
               placeholder="Enter Instructor Name"
               variant="outlined"
               fullWidth
-              value={formData.name}
+              required
+              defaultValue={formData.name}
               onChange={handleChange}
               sx={{
                 "& .MuiOutlinedInput-root": {
@@ -144,6 +87,7 @@ const CustomForm = ({ onClose, onSubmit }) => {
                   backgroundColor: "#F2F4F8",
                   borderColor: "#E3E7EC",
                 },
+                "& .MuiOutlinedInput-input": { padding: "10px" },
               }}
             />
           </Grid2>
@@ -153,11 +97,12 @@ const CustomForm = ({ onClose, onSubmit }) => {
               Instructor Role <span style={{ color: "red" }}>*</span>
             </Typography>
             <TextField
-              id="instructorRole"
+              name="role"
               placeholder="Enter instructor role"
               variant="outlined"
               fullWidth
-              value={formData.role}
+              required
+              defaultValue={formData.role}
               onChange={handleChange}
               sx={{
                 "& .MuiOutlinedInput-root": {
@@ -165,6 +110,7 @@ const CustomForm = ({ onClose, onSubmit }) => {
                   backgroundColor: "#F2F4F8",
                   borderColor: "#E3E7EC",
                 },
+                "& .MuiOutlinedInput-input": { padding: "10px" },
               }}
             />
           </Grid2>
@@ -173,12 +119,12 @@ const CustomForm = ({ onClose, onSubmit }) => {
               Instructor Company <span style={{ color: "red" }}>*</span>
             </Typography>
             <TextField
-              id="instructorCompany"
+              name="company"
               placeholder="Enter instructor company"
               variant="outlined"
               fullWidth
               required
-              value={formData.company}
+              defaultValue={formData.company}
               onChange={handleChange}
               sx={{
                 "& .MuiOutlinedInput-root": {
@@ -186,6 +132,7 @@ const CustomForm = ({ onClose, onSubmit }) => {
                   backgroundColor: "#F2F4F8",
                   borderColor: "#E3E7EC",
                 },
+                "& .MuiOutlinedInput-input": { padding: "10px" },
               }}
             />
           </Grid2>
@@ -202,12 +149,15 @@ const CustomForm = ({ onClose, onSubmit }) => {
               </Typography>
               <Select
                 id="custom-select"
-                value={formData.topic}
+                name="topic"
+                defaultValue=""
                 onChange={handleChange}
+                required
                 sx={{
                   borderRadius: "10px",
                   backgroundColor: "#F2F4F8",
                   borderColor: "#E3E7EC",
+                  "& .MuiOutlinedInput-input": { padding: "10px" },
                 }}
               >
                 {topics.map((topic, index) => (
@@ -221,39 +171,93 @@ const CustomForm = ({ onClose, onSubmit }) => {
         </Grid2>
       </Grid2>
 
-      <Typography variant="h5" component="div" gutterBottom marginY={5}>
+      <Typography variant="h5" component="div" gutterBottom marginY={3}>
         Webinar Details
       </Typography>
       <Grid2 container spacing={2} flexDirection="column">
         <Grid2 item xs={12}>
-          <Typography variant="body1" fontWeight={600} marginBottom={1}>
+          <Typography variant="body1" fontWeight={600}>
             Webinar title <span style={{ color: "red" }}>*</span>
           </Typography>
           <TextField
-            id="webinarTitle"
+            name="title"
             placeholder="Enter webinar title"
             variant="outlined"
             fullWidth
-            value={formData.title}
+            required
+            defaultValue={formData.title}
             onChange={handleChange}
+            sx={{
+              "& .MuiOutlinedInput-input": { padding: "10px" },
+            }}
           />
         </Grid2>
-        <Grid2 item xs={12} sm={4}>
-          Start Date : {formData.startDate}
-        </Grid2>
-        <Grid2 item xs={12} sm={4}>
-          Start Time input field: {formData.startTime}
-        </Grid2>
-        <Grid2 item xs={12} sm={4}>
-          End Time input field
+        <Grid2 container spacing={2} flexDirection="row">
+          <Grid2 item xs={12} sm={4}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <Typography variant="body1" fontWeight={600}>
+                Start Date <span style={{ color: "red" }}>*</span>
+              </Typography>
+              <DatePicker
+                defaultValue={formData.startDate}
+                onChange={(newValue) =>
+                  handleDateTimeChange(newValue, "startDate")
+                }
+                sx={{
+                  "& .MuiInputBase-input": { padding: "8px", width: "8em" },
+                }}
+                slotProps={{
+                  input: {
+                    renderInput: (params) => <TextField {...params} required />,
+                  },
+                }}
+              />
+            </LocalizationProvider>
+          </Grid2>
+          <Grid2 item xs={12} sm={4}>
+            <Typography variant="body1" fontWeight={600}>
+              Start Time <span style={{ color: "red" }}>*</span>
+            </Typography>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <TimePicker
+                defaultValue={formData.startTime}
+                onChange={(newValue) =>
+                  handleDateTimeChange(newValue, "startTime")
+                }
+                sx={{
+                  "& .MuiInputBase-input": { padding: "8px", width: "8em" },
+                }}
+                renderInput={(params) => <TextField {...params} required />}
+              />
+            </LocalizationProvider>
+          </Grid2>
+          <Grid2 item xs={12} sm={4}>
+            <Typography variant="body1" fontWeight={600}>
+              End Time <span style={{ color: "red" }}>*</span>
+            </Typography>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <TimePicker
+                defaultValue={formData.endTime}
+                onChange={(newValue) =>
+                  handleDateTimeChange(newValue, "endTime")
+                }
+                sx={{
+                  "& .MuiInputBase-input": { padding: "8px", width: "8em" },
+                }}
+                renderInput={(params) => <TextField {...params} required />}
+              />
+            </LocalizationProvider>
+          </Grid2>
         </Grid2>
       </Grid2>
-      <Button type="submit" variant="contained">
-        Submit
-      </Button>
-      <Button variant="text" color="primary" onClick={() => onClose()}>
-        Cancel
-      </Button>
+      <Grid2 container marginY={2} flexDirection="row">
+        <Button type="submit" variant="contained">
+          Create Webinar
+        </Button>
+        <Button variant="text" color="primary" onClick={() => onClose()}>
+          Cancel
+        </Button>
+      </Grid2>
     </Box>
   );
 };
