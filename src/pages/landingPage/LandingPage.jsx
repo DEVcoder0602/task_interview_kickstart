@@ -128,8 +128,8 @@ const LandingPage = () => {
       <Box sx={{ flexGrow: 1 }} p={4}>
         <Grid2
           container
-          spacing={{ xs: 7, md: 8 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
+          gap={4}
           flexWrap="wrap"
           justifyContent="start"
         >
