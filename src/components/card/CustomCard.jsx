@@ -7,21 +7,8 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import DummyImage from "../../assests/dummy.png";
 
-const cardDetails = {
-  title: "Matthew Martin",
-  position: "Lead Front End Developer, Google",
-  avatar: <img src={DummyImage} alt="dummy" height={100} width={100} />,
-  backgroundColor: "#741DE3",
-  topic: "Front End Engineering",
-  content: {
-    title: "React and React Native",
-    body: "Tuesday, April 22, 4:00 - 5:00 PM",
-  },
-};
-
-const CustomCard = () => {
+const CustomCard = ({ cardDetails }) => {
   return (
     <Card sx={{ maxWidth: 400, padding: "20px", borderRadius: "24px" }}>
       <CardHeader
@@ -31,7 +18,7 @@ const CustomCard = () => {
         subheaderTypographyProps={{ color: "White" }}
         avatar={cardDetails.avatar}
         sx={{
-          backgroundColor: "#741DE3",
+          backgroundColor: cardDetails.backgroundColor,
           display: "flex",
           flexDirection: "row-reverse",
           justifyContent: "center",
@@ -39,7 +26,11 @@ const CustomCard = () => {
         }}
       />
       <CardContent>
-        <Typography variant="body1" color="purple" fontWeight="600">
+        <Typography
+          variant="body1"
+          color={cardDetails.backgroundColor}
+          fontWeight="600"
+        >
           {cardDetails.topic}
         </Typography>
         <Typography variant="h6" color="black" fontWeight="600">

@@ -7,12 +7,12 @@ const CustomModal = ({ open, onClose }) => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 1000,
-    height: 800,
+    width: 900,
+    height: 700,
     bgcolor: "background.paper",
     boxShadow: 24,
     p: 4,
-    borderRadius: 12,
+    borderRadius: 4,
   };
 
   const handleFormSubmit = (formData) => {
