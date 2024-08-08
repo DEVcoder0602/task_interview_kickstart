@@ -23,8 +23,6 @@ import { v4 as uuidv4 } from "uuid";
 import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
 import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
 
-const topics = ["Front End Engineering", "Career"];
-
 function getRandomColor() {
   const r = Math.floor(Math.random() * 256);
   const g = Math.floor(Math.random() * 256);
@@ -33,7 +31,7 @@ function getRandomColor() {
   return `rgb(${r},${g},${b})`;
 }
 
-const CustomForm = ({ onClose, onSubmit, updatedData }) => {
+const CustomForm = ({ onClose, onSubmit, updatedData, topics }) => {
   const [formData, setFormData] = useState(
     updatedData?.id
       ? updatedData

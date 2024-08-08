@@ -3,7 +3,7 @@ import CustomForm from "../form/CustomForm";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import CloseIcon from "@mui/icons-material/Close";
 
-const CustomModal = ({ open, onClose, addWebinar, updatedData }) => {
+const CustomModal = ({ open, onClose, addWebinar, updatedData, topics }) => {
   const style = {
     position: "absolute",
     top: "50%",
@@ -42,6 +42,7 @@ const CustomModal = ({ open, onClose, addWebinar, updatedData }) => {
           onClose={onClose}
           onSubmit={handleFormSubmit}
           updatedData={updatedData}
+          topics={topics}
         />
       </Box>
     </Modal>
