@@ -22,6 +22,7 @@ const CustomCard = ({ cardDetails }) => {
             alt="dummy"
             height={100}
             width={100}
+            style={{ borderRadius: "10px" }}
           />
         }
         sx={{
