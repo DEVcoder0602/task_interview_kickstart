@@ -12,33 +12,35 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 import ImageUpload from "../imageUpload/ImageUpload";
 import {
   TimePicker,
-  DatePicker,
   LocalizationProvider,
+  MobileDatePicker,
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/de";
 import dayjs from "dayjs";
 
-const topics = [
-  "Frontend",
-  "Backend",
-  "Fullstack",
-  "DevOps",
-  "Mobile",
-  "Career",
-];
+const topics = ["Front End Engineering", "Career"];
+
+function getRandomColor() {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+
+  return `rgb(${r},${g},${b})`;
+}
 
 const CustomForm = ({ onClose, onSubmit }) => {
   const [formData, setFormData] = useState({
     name: "",
-    photo: "",
+    photoUrl: "",
+    backgroundColor: getRandomColor(),
     role: "",
     company: "",
     topic: "",
     title: "",
-    startDate: dayjs(Date.now()),
-    startTime: dayjs(Date.now().toLocaleString()),
-    endTime: dayjs(Date.now().toLocaleString()),
+    startDate: dayjs(),
+    startTime: dayjs(),
+    endTime: dayjs(),
   });
 
   const handleChange = (event) => {
@@ -47,13 +49,23 @@ const CustomForm = ({ onClose, onSubmit }) => {
   };
 
   const handleDateTimeChange = (newValue, field) => {
-    setFormData((prev) => ({ ...prev, [field]: newValue }));
+    let formatedData = "";
+    if (field === "startTime" || field === "endTime") {
+      formatedData = dayjs(newValue).format("hh:mm A");
+      setFormData((prev) => ({ ...prev, [field]: formatedData }));
+      return;
+    }
+    formatedData = dayjs(newValue).format("dddd, MMMM D, YYYY");
+    setFormData((prev) => ({ ...prev, [field]: formatedData }));
+  };
+
+  const handleImageUpload = (imageData) => {
+    setFormData((prev) => ({ ...prev, photoUrl: imageData }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     onSubmit(formData);
-    onClose();
   };
 
   return (
@@ -68,8 +80,7 @@ const CustomForm = ({ onClose, onSubmit }) => {
               Instructor Name <span style={{ color: "red" }}>*</span>
             </Typography>
             <TextField
-              id="name"
-              name="instructorName"
+              name="name"
               placeholder="Enter Instructor Name"
               variant="outlined"
               fullWidth
@@ -135,7 +146,7 @@ const CustomForm = ({ onClose, onSubmit }) => {
         <Grid2 container flex={1} flexDirection="column" gap={2}>
           <Grid2 item xs={12} sm={6}>
             {/* Instructor Image input field */}
-            <ImageUpload />
+            <ImageUpload onImageUpload={handleImageUpload} />
           </Grid2>
           <Grid2 item xs={12} sm={6}>
             <FormControl fullWidth>
@@ -193,7 +204,7 @@ const CustomForm = ({ onClose, onSubmit }) => {
               <Typography variant="body1" fontWeight={600}>
                 Start Date <span style={{ color: "red" }}>*</span>
               </Typography>
-              <DatePicker
+              <MobileDatePicker
                 defaultValue={formData.startDate}
                 onChange={(newValue) =>
                   handleDateTimeChange(newValue, "startDate")

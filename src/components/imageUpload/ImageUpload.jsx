@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 
-function ImageUpload() {
+function ImageUpload({ onImageUpload }) {
+  const [imagePreview, setImagePreview] = useState(null);
+
   const handleUploadClick = () => {
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = "image/*";
     fileInput.onchange = (e) => {
       const file = e.target.files[0];
-      console.log(file); // Handle the file upload here, e.g., send it to a server or display a preview
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setImagePreview(e.target.result);
+          onImageUpload(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
     };
     fileInput.click();
   };
@@ -39,7 +48,15 @@ function ImageUpload() {
         }}
         onClick={handleUploadClick}
       >
-        <AddIcon style={{ fontSize: "60px" }} />
+        {imagePreview ? (
+          <img
+            src={imagePreview}
+            alt="Preview"
+            style={{ width: "100%", height: "100%", borderRadius: "8px" }}
+          />
+        ) : (
+          <AddIcon style={{ fontSize: "60px" }} />
+        )}
       </div>
     </div>
   );

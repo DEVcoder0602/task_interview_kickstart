@@ -33,6 +33,9 @@ export default function CustomInput({
           onChange={handleChange}
           sx={{ borderRadius: "18px" }}
         >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
           {options.map((topic, index) => (
             <MenuItem key={index} value={topic}>
               {topic}
@@ -49,14 +52,12 @@ export default function CustomInput({
         placeholder="Search for webinar"
         value={item}
         onChange={handleChange}
-        slotProps={{
-          input: {
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          },
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
         }}
       />
     );
