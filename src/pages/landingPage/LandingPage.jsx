@@ -25,10 +25,21 @@ const LandingPage = () => {
     setUpdatedData({});
   };
 
+  const searchInCardDetails = (cardDetails, searchTerm) => {
+    const searchLower = searchTerm.toLowerCase();
+    return Object.keys(cardDetails).some((key) => {
+      if (key === "id") return false; // Skip the id field
+      const value = cardDetails[key];
+      return (
+        typeof value === "string" && value.toLowerCase().includes(searchLower)
+      );
+    });
+  };
+
   const filteredCard = webinarData.filter(
     (item) =>
       (item.topic === topic || topic === "") &&
-      item.title.toLowerCase().includes(search.toLowerCase())
+      searchInCardDetails(item, search)
   );
 
   const handleDelete = (id) => {
@@ -81,6 +92,7 @@ const LandingPage = () => {
           onClose={handleClose}
           addWebinar={handleWebinarData}
           updatedData={updatedData}
+          topics={topics}
         />
       </Box>
       <Divider sx={{ marginLeft: "32px" }} />
