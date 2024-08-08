@@ -1,7 +1,7 @@
 import { Modal, Box, Typography } from "@mui/material";
 import CustomForm from "../form/CustomForm";
 
-const CustomModal = ({ open, onClose }) => {
+const CustomModal = ({ open, onClose, addWebinar }) => {
   const style = {
     position: "absolute",
     top: "50%",
@@ -17,7 +17,8 @@ const CustomModal = ({ open, onClose }) => {
 
   const handleFormSubmit = (formData) => {
     console.log("Form Data:", formData);
-    // Here you can handle the submission, e.g., sending data to a server
+    addWebinar((prev) => [...prev, formData]);
+    onClose();
   };
 
   return (

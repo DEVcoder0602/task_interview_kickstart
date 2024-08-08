@@ -12,11 +12,18 @@ const CustomCard = ({ cardDetails }) => {
   return (
     <Card sx={{ maxWidth: 400, padding: "20px", borderRadius: "24px" }}>
       <CardHeader
-        title={cardDetails.title}
+        title={cardDetails.name}
         titleTypographyProps={{ fontSize: "1.5rem", color: "white" }}
-        subheader={cardDetails.position}
+        subheader={`${cardDetails.role}, ${cardDetails.company}`}
         subheaderTypographyProps={{ color: "White" }}
-        avatar={cardDetails.avatar}
+        avatar={
+          <img
+            src={cardDetails.photoUrl}
+            alt="dummy"
+            height={100}
+            width={100}
+          />
+        }
         sx={{
           backgroundColor: cardDetails.backgroundColor,
           display: "flex",
@@ -34,10 +41,11 @@ const CustomCard = ({ cardDetails }) => {
           {cardDetails.topic}
         </Typography>
         <Typography variant="h6" color="black" fontWeight="600">
-          {cardDetails.content.title}
+          {cardDetails.title}
         </Typography>
         <Typography variant="body2" color="black">
-          {cardDetails.content.body}
+          {cardDetails.startDate}, {cardDetails.startTime} -{" "}
+          {cardDetails.endTime}
         </Typography>
       </CardContent>
       <CardActions>
