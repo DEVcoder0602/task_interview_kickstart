@@ -8,13 +8,20 @@ import {
   Button,
 } from "@mui/material";
 
-const CustomCard = ({ cardDetails }) => {
+const CustomCard = ({ cardDetails, onDelete, onEdit }) => {
   return (
-    <Card sx={{ maxWidth: 400, padding: "20px", borderRadius: "24px" }}>
+    <Card
+      sx={{ maxWidth: 450, padding: "20px", borderRadius: "24px", flexGrow: 1 }}
+    >
       <CardHeader
         title={cardDetails.name}
         titleTypographyProps={{ fontSize: "1.5rem", color: "white" }}
-        subheader={`${cardDetails.role}, ${cardDetails.company}`}
+        subheader={
+          <>
+            <span>{cardDetails.role}</span>
+            <span style={{ display: "block" }}>{cardDetails.company}</span>
+          </>
+        }
         subheaderTypographyProps={{ color: "White" }}
         avatar={
           <img
@@ -53,15 +60,26 @@ const CustomCard = ({ cardDetails }) => {
         <Button
           variant="contained"
           disableElevation={true}
+          color="error"
+          onClick={() => onDelete(cardDetails.id)}
           sx={{
             backgroundColor: "#F9E8E8",
             color: "#D14040",
             borderRadius: "16px",
+            textTransform: "none",
+            "&.MuiButton-root:hover": {
+              backgroundColor: "pink",
+            },
           }}
         >
           Delete
         </Button>
-        <Button variant="text" color="primary">
+        <Button
+          variant="text"
+          color="primary"
+          sx={{ textTransform: "none" }}
+          onClick={() => onEdit(cardDetails)}
+        >
           Edit
         </Button>
       </CardActions>

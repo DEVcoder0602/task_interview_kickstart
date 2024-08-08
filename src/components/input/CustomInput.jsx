@@ -31,7 +31,11 @@ export default function CustomInput({
           label={label}
           placeholder="Topic"
           onChange={handleChange}
-          sx={{ borderRadius: "18px" }}
+          sx={{
+            borderRadius: "10px",
+            borderColor: "#E3E7EC",
+            "& .MuiOutlinedInput-input": { padding: "12px" },
+          }}
         >
           <MenuItem value="">
             <em>None</em>
@@ -52,6 +56,14 @@ export default function CustomInput({
         placeholder="Search for webinar"
         value={item}
         onChange={handleChange}
+        sx={{
+          width: "30%",
+          "& .MuiOutlinedInput-root": {
+            borderRadius: "10px",
+            borderColor: "#E3E7EC",
+          },
+          "& .MuiOutlinedInput-input": { padding: "12px" },
+        }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
