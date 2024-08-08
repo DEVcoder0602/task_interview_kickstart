@@ -153,8 +153,8 @@ const LandingPage = () => {
           flexWrap="wrap"
           justifyContent="start"
         >
-          {filteredCard.map((data) => (
-            <CustomCard cardDetails={data} key={data.name} />
+          {filteredCard.map((data, index) => (
+            <CustomCard cardDetails={data} key={index} />
           ))}
         </Grid2>
       </Box>
