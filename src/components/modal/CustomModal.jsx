@@ -1,7 +1,9 @@
-import { Modal, Box, Typography } from "@mui/material";
+import { Modal, Box, Typography, Divider } from "@mui/material";
 import CustomForm from "../form/CustomForm";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import CloseIcon from "@mui/icons-material/Close";
 
-const CustomModal = ({ open, onClose, addWebinar }) => {
+const CustomModal = ({ open, onClose, addWebinar, updatedData }) => {
   const style = {
     position: "absolute",
     top: "50%",
@@ -11,23 +13,36 @@ const CustomModal = ({ open, onClose, addWebinar }) => {
     height: 700,
     bgcolor: "background.paper",
     boxShadow: 24,
-    p: 4,
     borderRadius: 4,
   };
 
   const handleFormSubmit = (formData) => {
     console.log("Form Data:", formData);
-    addWebinar((prev) => [...prev, formData]);
-    onClose();
+    addWebinar(formData);
+    // onClose();
   };
 
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={style}>
-        <Typography variant="h6" component="h2">
-          Create Webinar
-        </Typography>
-        <CustomForm onClose={onClose} onSubmit={handleFormSubmit} />
+        <Grid2
+          container
+          spacing={2}
+          flexDirection="row"
+          justifyContent="space-between"
+          p={3}
+        >
+          <Typography variant="h6" component="h2">
+            Create webinar
+          </Typography>
+          <CloseIcon onClick={onClose} sx={{ cursor: "pointer" }} />
+        </Grid2>
+        <Divider sx={{ marginY: "16px" }} />
+        <CustomForm
+          onClose={onClose}
+          onSubmit={handleFormSubmit}
+          updatedData={updatedData}
+        />
       </Box>
     </Modal>
   );

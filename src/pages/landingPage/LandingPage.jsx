@@ -1,13 +1,12 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import CustomButton from "../../components/button/CustomButton";
 import CustomInput from "../../components/input/CustomInput";
 import CustomCard from "../../components/card/CustomCard";
 import { useState } from "react";
 import CustomModal from "../../components/modal/CustomModal";
-import { useSelector } from "react-redux";
-
-const topics = ["Front End Engineering", "Career"];
+import { useDispatch, useSelector } from "react-redux";
+import { setWebinars } from "../../slices/webinarSlice";
 
 const LandingPage = () => {
   const [open, setOpen] = useState(false);
@@ -15,15 +14,53 @@ const LandingPage = () => {
   const [search, setSearch] = useState("");
   const webinars = useSelector((state) => state.webinar.webinars);
   const [webinarData, setWebinarData] = useState(webinars);
+  const [updatedData, setUpdatedData] = useState({});
+  const dispatch = useDispatch();
+
+  const topics = [...new Set(webinarData?.map((item) => item.topic))];
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setUpdatedData({});
+  };
 
   const filteredCard = webinarData.filter(
     (item) =>
       (item.topic === topic || topic === "") &&
       item.title.toLowerCase().includes(search.toLowerCase())
   );
+
+  const handleDelete = (id) => {
+    const newData = webinarData.filter((item) => item.id !== id);
+    setWebinarData(newData);
+  };
+
+  const handleEdit = (data) => {
+    setOpen(true);
+    setUpdatedData(data);
+  };
+
+  const handleWebinarData = (updatedWebinar) => {
+    const checkWebinar = webinarData.find(
+      (webinar) => webinar.id === updatedWebinar.id
+    );
+
+    let updatedWebinarData;
+
+    if (checkWebinar) {
+      updatedWebinarData = webinarData.map((webinar) =>
+        webinar.id === updatedWebinar.id ? updatedWebinar : webinar
+      );
+    } else {
+      updatedWebinarData = [...webinarData, updatedWebinar];
+    }
+
+    setWebinarData(updatedWebinarData);
+    dispatch(setWebinars(updatedWebinarData));
+    setUpdatedData({});
+    handleClose();
+  };
 
   return (
     <>
@@ -33,8 +70,7 @@ const LandingPage = () => {
         flexDirection="row"
         justifyContent="space-between"
         gap={4}
-        paddingX={4}
-        paddingY={2}
+        p={4}
       >
         <Typography variant="h5" fontWeight="700">
           Webinar
@@ -43,17 +79,17 @@ const LandingPage = () => {
         <CustomModal
           open={open}
           onClose={handleClose}
-          addWebinar={setWebinarData}
+          addWebinar={handleWebinarData}
+          updatedData={updatedData}
         />
       </Box>
-      <br />
+      <Divider sx={{ marginLeft: "32px" }} />
       <Box
         display="flex"
         flexDirection="row"
         justifyContent="space-between"
         gap={4}
-        paddingX={4}
-        paddingY={2}
+        p={4}
       >
         <CustomInput
           type="search"
@@ -69,16 +105,21 @@ const LandingPage = () => {
           setItem={setTopic}
         />
       </Box>
-      <Box sx={{ flexGrow: 1 }} p={4}>
+      <Box p={4}>
         <Grid2
           container
           columns={{ xs: 4, sm: 8, md: 12 }}
           gap={4}
           flexWrap="wrap"
-          justifyContent="start"
+          // justifyContent="space-between"
         >
           {filteredCard.map((data, index) => (
-            <CustomCard cardDetails={data} key={index} />
+            <CustomCard
+              cardDetails={data}
+              key={data.id}
+              onDelete={handleDelete}
+              onEdit={handleEdit}
+            />
           ))}
         </Grid2>
       </Box>

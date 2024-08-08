@@ -30,6 +30,7 @@ function ImageUpload({ onImageUpload }) {
           marginBottom: "6px",
           textAlign: "Start",
           fontWeight: "bold",
+          fontSize: "0.75em",
         }}
       >
         Instructor Image
@@ -37,14 +38,14 @@ function ImageUpload({ onImageUpload }) {
       <div
         style={{
           width: "150px",
-          height: "150px",
+          height: "138px",
           border: "2px dashed #D9DBDC",
           backgroundColor: "#F2F4F8",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           cursor: "pointer",
-          borderRadius: "8px",
+          borderRadius: "12px",
         }}
         onClick={handleUploadClick}
       >
@@ -55,7 +56,7 @@ function ImageUpload({ onImageUpload }) {
             style={{ width: "100%", height: "100%", borderRadius: "8px" }}
           />
         ) : (
-          <AddIcon style={{ fontSize: "60px" }} />
+          <AddIcon style={{ fontSize: "60px", color: "#636973" }} />
         )}
       </div>
     </div>

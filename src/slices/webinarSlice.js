@@ -2,9 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import DummyImage from "../assests/dummy.png";
 import theme from "../theme";
 import dayjs from "dayjs";
+import { v4 as uuidv4 } from "uuid";
 
 const webinars = [
   {
+    id: uuidv4(),
     name: "Matthew Martin",
     role: "Lead Front End Developer",
     company: "Google",
@@ -17,9 +19,10 @@ const webinars = [
     endTime: dayjs().add(1, "hour").format("hh:mm A"),
   },
   {
+    id: uuidv4(),
     name: "IK Expert",
-    role: "Leadership Role at a",
-    company: "FAANG Company",
+    role: "Leadership Role at a FAANG",
+    company: "Company",
     photoUrl: DummyImage,
     backgroundColor: theme.palette.pink.main,
     topic: "Career",
@@ -29,6 +32,7 @@ const webinars = [
     endTime: dayjs().add(1, "hour").format("hh:mm A"),
   },
   {
+    id: uuidv4(),
     name: "Matthew Martin",
     role: "Lead Front End Developer",
     company: "Google",
@@ -41,6 +45,7 @@ const webinars = [
     endTime: dayjs().add(1, "hour").format("hh:mm A"),
   },
   {
+    id: uuidv4(),
     name: "Matthew Martin",
     role: "Lead Front End Developer",
     company: "Google",
@@ -53,6 +58,7 @@ const webinars = [
     endTime: dayjs().add(1, "hour").format("hh:mm A"),
   },
   {
+    id: uuidv4(),
     name: "Matthew Martin",
     role: "Lead Front End Developer",
     company: "Google",
@@ -65,6 +71,7 @@ const webinars = [
     endTime: dayjs().add(1, "hour").format("hh:mm A"),
   },
   {
+    id: uuidv4(),
     name: "Matthew Martin",
     role: "Lead Front End Developer",
     company: "Google",
