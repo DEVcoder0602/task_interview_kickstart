@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 
-function ImageUpload({ onImageUpload }) {
-  const [imagePreview, setImagePreview] = useState(null);
+function ImageUpload({ onImageUpload, imageUrl = null }) {
+  const [imagePreview, setImagePreview] = useState(imageUrl);
 
   const handleUploadClick = () => {
     const fileInput = document.createElement("input");
@@ -27,7 +27,7 @@ function ImageUpload({ onImageUpload }) {
       <label
         style={{
           display: "block",
-          marginBottom: "6px",
+          marginBottom: "2px",
           textAlign: "Start",
           fontWeight: "bold",
           fontSize: "0.75em",
@@ -37,8 +37,8 @@ function ImageUpload({ onImageUpload }) {
       </label>
       <div
         style={{
-          width: "150px",
-          height: "138px",
+          width: "8em",
+          height: "7em",
           border: "2px dashed #D9DBDC",
           backgroundColor: "#F2F4F8",
           display: "flex",
