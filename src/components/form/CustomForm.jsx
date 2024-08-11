@@ -31,7 +31,7 @@ function getRandomColor() {
   return `rgb(${r},${g},${b})`;
 }
 
-const CustomForm = ({ onClose, onSubmit, updatedData, topics }) => {
+const CustomForm = ({ onClose, onSubmit, updatedData }) => {
   const [formData, setFormData] = useState(
     updatedData?.id
       ? updatedData
@@ -44,7 +44,7 @@ const CustomForm = ({ onClose, onSubmit, updatedData, topics }) => {
           company: "",
           topic: "",
           title: "",
-          startDate: "Type Start Date",
+          startDate: dayjs().format("D MMM YYYY"),
           startTime: dayjs().format("hh:mm A"),
           endTime: dayjs().format("hh:mm A"),
         }
@@ -67,7 +67,7 @@ const CustomForm = ({ onClose, onSubmit, updatedData, topics }) => {
       setFormData((prev) => ({ ...prev, [field]: formatedData }));
       return;
     }
-    formatedData = dayjs(newValue).format("MMMM D, YYYY");
+    formatedData = dayjs(newValue).format("D MMM YYYY");
     setFormData((prev) => ({ ...prev, [field]: formatedData }));
   };
 
@@ -87,13 +87,19 @@ const CustomForm = ({ onClose, onSubmit, updatedData, topics }) => {
       <Box paddingX={3}>
         <Grid2 container gap={2} flexDirection="row" alignItems="center">
           <PeopleOutlineOutlinedIcon sx={{ fontSize: 30 }} />
-          <Typography variant="body1" component="div" gutterBottom>
+          <Typography variant="body1" fontWeight={500}>
             Instructor Details
           </Typography>
         </Grid2>
-        <Grid2 container spacing={2} flexDirection="row" paddingLeft="45px">
-          <Grid2 container spacing={4} flexDirection="column" flex={1}>
-            <Grid2 xs={12}>
+        <Grid2 container spacing={3} paddingLeft="45px" marginY={1}>
+          <Grid2
+            container
+            flexDirection="column"
+            flex={1}
+            justifyContent="space-between"
+            // border="2px solid green"
+          >
+            <Grid2 item md={12} paddingY="6px">
               <Typography variant="caption" fontWeight={600} marginBottom={1}>
                 Instructor Name <span style={{ color: "red" }}>*</span>
               </Typography>
@@ -111,12 +117,12 @@ const CustomForm = ({ onClose, onSubmit, updatedData, topics }) => {
                     backgroundColor: "#F2F4F8",
                     borderColor: "#E3E7EC",
                   },
-                  "& .MuiOutlinedInput-input": { padding: "10px" },
+                  "& .MuiOutlinedInput-input": { padding: "8px" },
                 }}
               />
             </Grid2>
 
-            <Grid2 xs={12}>
+            <Grid2 xs={12} paddingY="6px">
               <Typography variant="caption" fontWeight={600} marginBottom={1}>
                 Instructor Role <span style={{ color: "red" }}>*</span>
               </Typography>
@@ -134,11 +140,11 @@ const CustomForm = ({ onClose, onSubmit, updatedData, topics }) => {
                     backgroundColor: "#F2F4F8",
                     borderColor: "#E3E7EC",
                   },
-                  "& .MuiOutlinedInput-input": { padding: "10px" },
+                  "& .MuiOutlinedInput-input": { padding: "8px" },
                 }}
               />
             </Grid2>
-            <Grid2 xs={12}>
+            <Grid2 xs={12} paddingY="6px">
               <Typography variant="caption" fontWeight={600} marginBottom={1}>
                 Instructor Company <span style={{ color: "red" }}>*</span>
               </Typography>
@@ -156,52 +162,69 @@ const CustomForm = ({ onClose, onSubmit, updatedData, topics }) => {
                     backgroundColor: "#F2F4F8",
                     borderColor: "#E3E7EC",
                   },
-                  "& .MuiOutlinedInput-input": { padding: "10px" },
+                  "& .MuiOutlinedInput-input": { padding: "6px 10px" },
                 }}
               />
             </Grid2>
           </Grid2>
-          <Grid2 container flex={1} flexDirection="column" gap={2}>
+          <Grid2
+            container
+            flex={1}
+            flexDirection="column"
+            // sx={{ border: "2px solid red" }}
+          >
             <Grid2 item xs={12} sm={6}>
               {/* Instructor Image input field */}
-              <ImageUpload onImageUpload={handleImageUpload} />
+              <ImageUpload
+                onImageUpload={handleImageUpload}
+                imageUrl={formData.photoUrl}
+              />
             </Grid2>
-            <Grid2 item xs={12} sm={6}>
-              <FormControl fullWidth>
+            <Grid2
+              item
+              xs={12}
+              sm={6}
+              sx={{ "&.MuiGrid2-root": { width: "100%", padding: "8px" } }}
+            >
+              <Grid2 xs={12}>
                 <Typography variant="caption" fontWeight={600} marginBottom={1}>
-                  Topics <span style={{ color: "red" }}>*</span>
+                  Topic <span style={{ color: "red" }}>*</span>
                 </Typography>
-                <Select
-                  id="custom-select"
+                <TextField
                   name="topic"
+                  placeholder="Enter Topic"
+                  variant="outlined"
+                  fullWidth
+                  required
                   defaultValue={formData.topic}
                   onChange={handleChange}
-                  required
                   sx={{
-                    borderRadius: "10px",
-                    backgroundColor: "#F2F4F8",
-                    borderColor: "#E3E7EC",
-                    "& .MuiOutlinedInput-input": { padding: "10px" },
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "10px",
+                      backgroundColor: "#F2F4F8",
+                      borderColor: "#E3E7EC",
+                    },
+                    "& .MuiOutlinedInput-input": { padding: "6px 10px" },
                   }}
-                >
-                  {topics.map((topic, index) => (
-                    <MenuItem key={index} value={topic}>
-                      {topic}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                />
+              </Grid2>
             </Grid2>
           </Grid2>
         </Grid2>
-        <Grid2 container gap={2} flexDirection="row" alignItems="center">
+        <Grid2
+          container
+          gap={2}
+          flexDirection="row"
+          alignItems="center"
+          marginY={2}
+        >
           <VideocamOutlinedIcon sx={{ fontSize: 30 }} />
-          <Typography variant="body1" component="div" gutterBottom marginY={3}>
+          <Typography variant="body1" fontWeight={500}>
             Webinar Details
           </Typography>
         </Grid2>
         <Grid2 container spacing={2} flexDirection="row" paddingLeft="45px">
-          <Grid2 container spacing={2} flexDirection="column" width="100%">
+          <Grid2 container spacing={2} flexDirection="column" flex={1}>
             <Grid2 item xs={12}>
               <Typography variant="caption" fontWeight={600}>
                 Webinar title <span style={{ color: "red" }}>*</span>
@@ -216,21 +239,15 @@ const CustomForm = ({ onClose, onSubmit, updatedData, topics }) => {
                 onChange={handleChange}
                 sx={{
                   "& .MuiOutlinedInput-root": {
-                    borderRadius: "10px",
+                    borderRadius: "8px",
                     backgroundColor: "#F2F4F8",
                     borderColor: "#E3E7EC",
                   },
-                  "& .MuiOutlinedInput-input": { padding: "10px" },
+                  "& .MuiOutlinedInput-input": { padding: "6px 10px" },
                 }}
               />
             </Grid2>
-            <Grid2
-              container
-              spacing={2}
-              flexDirection="row"
-              gap={1}
-              height={100}
-            >
+            <Grid2 container flexDirection="row" gap={1} height={100}>
               <Grid2 spacing={2} flexDirection="column">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <Typography
@@ -242,6 +259,7 @@ const CustomForm = ({ onClose, onSubmit, updatedData, topics }) => {
                   </Typography>
                   <DatePicker
                     defaultValue={dayjs(formData.startDate)}
+                    disablePast
                     onChange={(newValue) =>
                       handleDateTimeChange(newValue, "startDate")
                     }
@@ -252,8 +270,9 @@ const CustomForm = ({ onClose, onSubmit, updatedData, topics }) => {
                         borderColor: "#E3E7EC",
                       },
                       "& .MuiOutlinedInput-input": {
-                        padding: "8px",
+                        padding: "6px",
                         width: "100px",
+                        fontSize: "14px",
                       },
                     }}
                     slotProps={{
@@ -272,7 +291,8 @@ const CustomForm = ({ onClose, onSubmit, updatedData, topics }) => {
                 </Typography>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <TimePicker
-                    defaultValue={dayjs()}
+                    defaultValue={dayjs(formData.startTime, "hh:mm A")}
+                    disablePast
                     onChange={(newValue) =>
                       handleDateTimeChange(newValue, "startTime")
                     }
@@ -283,8 +303,9 @@ const CustomForm = ({ onClose, onSubmit, updatedData, topics }) => {
                         borderColor: "#E3E7EC",
                       },
                       "& .MuiOutlinedInput-input": {
-                        padding: "8px",
+                        padding: "6px",
                         width: "100px",
+                        fontSize: "14px",
                       },
                     }}
                     renderInput={(params) => <TextField {...params} required />}
@@ -297,7 +318,9 @@ const CustomForm = ({ onClose, onSubmit, updatedData, topics }) => {
                 </Typography>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <TimePicker
-                    defaultValue={dayjs()}
+                    defaultValue={dayjs(formData.endTime, "hh:mm A")}
+                    minTime={dayjs(formData.startTime, "hh:mm A")}
+                    disablePast
                     onChange={(newValue) =>
                       handleDateTimeChange(newValue, "endTime")
                     }
@@ -308,8 +331,9 @@ const CustomForm = ({ onClose, onSubmit, updatedData, topics }) => {
                         borderColor: "#E3E7EC",
                       },
                       "& .MuiOutlinedInput-input": {
-                        padding: "8px",
+                        padding: "6px",
                         width: "100px",
+                        fontSize: "14px",
                       },
                     }}
                     renderInput={(params) => <TextField {...params} required />}

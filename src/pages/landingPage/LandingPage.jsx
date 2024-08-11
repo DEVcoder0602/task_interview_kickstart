@@ -92,7 +92,6 @@ const LandingPage = () => {
           onClose={handleClose}
           addWebinar={handleWebinarData}
           updatedData={updatedData}
-          topics={topics}
         />
       </Box>
       <Divider sx={{ marginLeft: "32px" }} />
