@@ -80,8 +80,6 @@ const CustomForm = ({ onClose, onSubmit, updatedData }) => {
     onSubmit(formData);
   };
 
-  // console.log("Form Data:", formData);
-
   return (
     <Box component="form" onSubmit={handleSubmit}>
       <Box paddingX={3}>
@@ -247,7 +245,7 @@ const CustomForm = ({ onClose, onSubmit, updatedData }) => {
                 }}
               />
             </Grid2>
-            <Grid2 container flexDirection="row" gap={1} height={100}>
+            <Grid2 container flexDirection="row" flexWrap="nowrap">
               <Grid2 spacing={2} flexDirection="column">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <Typography
@@ -308,7 +306,13 @@ const CustomForm = ({ onClose, onSubmit, updatedData }) => {
                         fontSize: "14px",
                       },
                     }}
-                    renderInput={(params) => <TextField {...params} required />}
+                    slotProps={{
+                      input: {
+                        renderInput: (params) => (
+                          <TextField {...params} required />
+                        ),
+                      },
+                    }}
                   />
                 </LocalizationProvider>
               </Grid2>
@@ -336,7 +340,13 @@ const CustomForm = ({ onClose, onSubmit, updatedData }) => {
                         fontSize: "14px",
                       },
                     }}
-                    renderInput={(params) => <TextField {...params} required />}
+                    slotProps={{
+                      input: {
+                        renderInput: (params) => (
+                          <TextField {...params} required />
+                        ),
+                      },
+                    }}
                   />
                 </LocalizationProvider>
               </Grid2>
